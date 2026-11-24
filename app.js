@@ -1,9 +1,26 @@
-const photos = [...document.querySelectorAll('.gallery-item')];
+const gallery = document.querySelector('.gallery');
+const layoutClasses = ['gallery-large', 'gallery-tall', 'gallery-wide', 'gallery-last'];
+const galleryItems = [...gallery.querySelectorAll('.gallery-item')];
+
+for (let index = galleryItems.length - 1; index > 0; index -= 1) {
+  const randomIndex = Math.floor(Math.random() * (index + 1));
+  [galleryItems[index], galleryItems[randomIndex]] = [galleryItems[randomIndex], galleryItems[index]];
+}
+
+galleryItems.forEach((item, index) => {
+  if (index < layoutClasses.length) item.classList.add(layoutClasses[index]);
+  gallery.append(item);
+  item.querySelector('.image-index').innerHTML = `${String(index + 1).padStart(2, '0')} <i>/</i> ${String(galleryItems.length).padStart(2, '0')}`;
+  item.setAttribute('aria-label', `View kitchen photograph ${index + 1}`);
+});
+
+const photos = galleryItems;
 const lightbox = document.querySelector('.lightbox');
 const lightboxImage = lightbox.querySelector('img');
 const lightboxCaption = lightbox.querySelector('figcaption');
 const count = document.querySelector('.gallery-count');
 let activePhoto = 0;
+count.textContent = `01 / ${String(photos.length).padStart(2, '0')}`;
 
 function showPhoto(index) {
   activePhoto = (index + photos.length) % photos.length;
