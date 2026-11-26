@@ -68,6 +68,14 @@ navigation.querySelectorAll('a').forEach((link) => link.addEventListener('click'
   menuButton.setAttribute('aria-expanded', 'false');
 }));
 
+document.querySelectorAll('a[href^="https://wa.me/"]').forEach((link) => {
+  link.addEventListener('click', () => {
+    window.gtag('event', 'conversion', {
+      send_to: 'AW-18594222613/fRu8CLit7r4dEJWktaJF',
+    });
+  });
+});
+
 const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
   if (entry.isIntersecting) {
     entry.target.classList.add('is-visible');
